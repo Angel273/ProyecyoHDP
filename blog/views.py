@@ -471,3 +471,21 @@ def borrar_temperatura(request, temperatura_id):
     if request.method == 'POST':
         sec.delete()
         return redirect('temperaturas')
+    
+@login_required
+def crear_cultivo(request):
+    if request.method == 'GET':
+        return render(request, 'crear_cultivo.html',{
+        'form':CultivoForm
+        })
+    else:
+        try:
+            form = CultivoForm(request.POST)
+            new_cultivo=form.save(commit=False)
+            new_cultivo.save()
+            return redirect('home')
+        except:
+             return render(request, 'crear_cultivo.html',{
+                'form': CultivoForm,
+                'error' : 'Me jodiste la pagina'
+            })

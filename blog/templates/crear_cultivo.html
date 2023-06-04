@@ -2,10 +2,10 @@
 
 
 {% block content %}
-<h1 class="text-center display-1 py-5">Crear Seccion</h1>
+<h1 class="text-center display-1 py-5">Crear Cultivo</h1>
 <h3 class="text-center text-danger">{{error}}</h3>
 <div class="col-md-4 mx-auto text-center">
-    <form action="/crear/seccion/" method="POST">
+    <form action="/crear/cultivo/" method="POST">
         {% csrf_token %}
         {{form.as_p}}
         <button>Guardar</button>

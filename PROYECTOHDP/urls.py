@@ -35,7 +35,8 @@ urlpatterns = [
     path('ver/temperaturas/',views.ver_temperaturas, name='temperaturas'),
     path('crear/temperatura/',views.crear_temperatura, name='crear_temperatura'),
     path('editar/temperatura/<int:temperatura_id>',views.editar_temperatura, name='editar_temperatura'),
-    path('borrar/temperatura/<int:temperatura_id>',views.borrar_temperatura, name='borrar_temperatura')
+    path('borrar/temperatura/<int:temperatura_id>',views.borrar_temperatura, name='borrar_temperatura'),
+     path('crear/cultivo/',views.crear_cultivo, name='crear_cultivo'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

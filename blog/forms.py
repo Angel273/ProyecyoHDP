@@ -56,3 +56,8 @@ class TemperaturaForm(ModelForm):
         widgets = {
             "fecha": DateInput()
         }
+
+class CultivoForm(ModelForm):
+    class Meta:
+        model = cultivo
+        fields = ['nombre']
