@@ -416,7 +416,7 @@ def borrar_precipitacion(request, precipitacion_id):
     sec = get_object_or_404(precipitacion, pk=precipitacion_id)
     if request.method == 'POST':
         sec.delete()
-        return redirect('precipitacion')
+        return redirect('precipitaciones')
 
 @login_required
 def ver_temperaturas(request):
