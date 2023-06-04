@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1 class="display-1 text-center">Editar Perdida</h1>
+<h3 class="text-center text-danger">{{error}}</h1>
+<div class="col-md-4 mx-auto text-center py-5">
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-primary">
+            Modificar
+        </button>
+    </form>
+    
+
+</div>
+
+{% endblock %}

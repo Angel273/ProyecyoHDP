@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center display-1 mx-5 py-5">Administracion Temperaturas</h1>
+<table class="table mx-5 py-5 my-5">
+    <thead>
+        <tr>
+            <th>Grados</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for temp in temperaturas %}
+    <tr>
+        <td>{{temp.grados}}</td>
+        <td>{{temp.fecha}}</td>
+        <td class="d-flex">
+            <form action="{% url 'editar_temperatura' temp.idTemperatura %}" class="px-1">
+                <button class="btn btn-success">Modificar</button>
+            </form>
+            <form action="{% url 'borrar_temperatura' temp.idTemperatura %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger">Eliminar</button>
+            </form>
+            
+        </td>
+    </tr>    
+    {% endfor %}
+    </tbody>
+</table>
+<div class="col-md-4 mx-auto text-center ">
+    <a href="/crear/temperatura/" class="btn btn-primary text-center">Agregar</a>
+</div>
+
+{% endblock %}

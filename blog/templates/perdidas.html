@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center display-1 mx-5 py-5">Administracion Perdidas</h1>
+<table class="table mx-5 py-5 my-5">
+    <thead>
+        <tr>
+            <th>Cultivo</th>
+            <th>Perida Monetaria</th>
+            <th>Perdida En quintales</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for per in perdida %}
+    <tr>
+        <td>{{per.cultivo.nombre}}</td>
+        <td>{{per.cantidadMonetaria}}</td>
+        <td>{{per.cantidadGrano}}</td>
+        <td>{{per.fechaPerdida.year}}</td>
+        <td class="d-flex">
+            <form action="{% url 'editar_perdida' per.idPerdida %}" class="px-1">
+                <button class="btn btn-success">Modificar</button>
+            </form>
+            <form action="{% url 'borrar_perdida' per.idPerdida %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger">Eliminar</button>
+            </form>
+            
+        </td>
+    </tr>    
+    {% endfor %}
+    </tbody>
+</table>
+<div class="col-md-4 mx-auto text-center ">
+    <a href="/crear/perdida/" class="btn btn-primary text-center">Agregar</a>
+</div>
+
+{% endblock %}

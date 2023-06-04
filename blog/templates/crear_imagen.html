@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1 class="text-center display-1 py-5">Cargar imagen</h1>
+<h3 class="text-center text-danger">{{error}}</h3>
+<div class="col-md-4 mx-auto text-center">
+    <form action="/crear/imagen/" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button>Guardar</button>
+    </form>
+</div>
+
+{% endblock %}

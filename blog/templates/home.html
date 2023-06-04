@@ -7,44 +7,76 @@
 <main class="container">
   <h1 class="display-1 text-center mb-5 mt-5 py-5">Efectos del Cambio Climatico en la Economía Salvadoreña</h1>
   {% for seccion in secciones %}
-  <div class="row">
-      <h1 class=" display-5 text-center py-3">{{seccion.titulo}}</h1>
-     
-      {% if seccion.parrafo != NULL %}
-      <div class="mx-auto 
-      {% if seccion.imagen == NULL %}
-      col-md-12
-      {% else %}
-      col-md-8 
-      {% endif %}
-      ">
-        <p class="lead lh-base">{{seccion.parrafo.parrafo|safe}}</p>
-      </div>
-      {% endif %} 
-      {% if seccion.imagen != NULL %}
-      <div class="col-md-4 mx-auto">
-        <img class="img-fluid rounded " src="{{seccion.imagen.imagen.url}}" alt=""/>
-      </div>
-      {% endif %}    
-  </div>
-  {% if user.is_authenticated %}
-  <div class="mx-auto text-center"> 
-    <a href="#" class="btn btn-primary">Modificar</a>
-    <a href="#" class="btn btn-danger">Eliminar</a>
-  </div>
-  
- 
-  {% endif %}
+    <div class="row">
+        <h1 class=" display-5 text-center py-3">{{seccion.titulo}}</h1>
+      
+        {% if seccion.parrafo != NULL %}
+        <div class="mx-auto 
+        {% if seccion.imagen == NULL %}
+        col-md-12
+        {% else %}
+        col-md-8 
+        {% endif %}
+        ">
+          <p class="lead lh-base">{{seccion.parrafo.parrafo|safe}}</p>
+        </div>
+        {% endif %} 
+        {% if seccion.imagen != NULL %}
+        <div class="col-md-4 mx-auto">
+          <img class="img-fluid rounded " src="{{seccion.imagen.imagen.url}}" alt=""/>
+        </div>
+        {% endif %}    
+    </div>
+    {% if user.is_authenticated %}
+    <div class="mx-auto text-center"> 
+      <a href="{% url 'seccion' seccion.idSeccion %}" class="btn btn-primary mx-auto">Modificar</a>
+      <form method="POST" action="{% url 'borrarSeccion' seccion.idSeccion %}" class="d-flex mx-auto py-3">
+        {% csrf_token %}
+          <button class="btn btn-danger mx-auto">Eliminar</button>
+      </form>
+    </div>
+    {% endif %}
+
       {% endfor %}
 
-    <section id="seccion-1" class="py-5 my-5">
+    <section id="seccion-1" class="my-4">
       <h1 class="mx-auto display-5 text-center">Produccion</h1>
       <div ><canvas id="myChart1"></canvas></div>
+      
+      {% if user.is_authenticated %}
+      <a href="/ver/producciones/" class="btn btn-primary mx-auto text-center">Administrar</a>
+      {% endif %}
     </section>
-    <section id="seccion-2">
-      <h1 class="mx-auto display-5 text-center">Perdidas</h1>
-      <canvas id="myChart2"></canvas>
+    <section id="seccion-2" class="my-5 py5">
+      <h1 class="mx-auto display-5 text-center">Perdidas en Quintales</h1>
+      <canvas id="myChart2"  class="w-50 mx-auto"></canvas>
+      {% if user.is_authenticated %}
+      <a href="/ver/perdidas/" class="btn btn-primary mx-auto text-center">Administrar</a>
+      {% endif %}
     </section>
+    <section id="seccion-3" class="my-4">
+      <h1 class="mx-auto display-5 text-center">Perdidas en Dolares</h1>
+      <canvas id="myChart3"></canvas>
+      {% if user.is_authenticated %}
+      <a href="/ver/perdidas/" class="btn btn-primary mx-auto text-center">Administrar</a>
+      {% endif %}
+    </section>
+    <section id="seccion-4" class="my-4">
+      <h1 class="mx-auto display-5 text-center">Temperaturas</h1>
+      <canvas id="myChart4"></canvas>
+      {% if user.is_authenticated %}
+      <a href="/ver/temperaturas/" class="btn btn-primary mx-auto text-center">Administrar</a>
+      {% endif %}
+    </section>
+    <section id="seccion-5" class="my-4">
+        <h1 class="mx-auto display-5 text-center">Precipitaciones</h1>
+        <canvas id="myChart5"></canvas>
+        {% if user.is_authenticated %}
+        <a href="/ver/precipitaciones/" class="btn btn-primary mx-auto text-center">Administrar</a>
+        {% endif %}
+      </section>
+      
+    
   
 </main>
 
@@ -54,48 +86,95 @@
 <script>
   const ctx1 = document.getElementById('myChart1');
   const ctx2 = document.getElementById('myChart2');
+  const ctx3 = document.getElementById('myChart3');
+  const ctx4 = document.getElementById('myChart4');
+  const ctx5 = document.getElementById('myChart5');
 
   new Chart(ctx1, {
     type: 'bar',
     data: {
-      labels: [{{ fechas|safe }}],
+      labels: [{{ fecha|safe }}],
       datasets: [{
         label: 'Maiz',
-        data: [{{ cantidadesMaiz|safe }}],
+        data: [{{ Maiz|safe }}],
         borderWidth: 1
       },{
-        label: 'Frijol',
-        data: [{{ cantidadesFrijol|safe }}],
+        label: 'Sorgo',
+        data: [{{ sorgo|safe }}],
+        borderWidth: 1
+      },{
+        label: 'Café',
+        data: [{{ Cafe|safe }}],
         borderWidth: 1
       },]
     },
     options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
+    
     }
   });
 
   new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: [{{ cultivoPerdida|safe }}],
+      datasets: [{
+        label: 'Perdida Quintales',
+        data: [{{ perdidaQQ|safe }}],
+      },]
+    },
+    options: {
+      scales: {
+      }
+    }
+  })
+
+  new Chart(ctx3, {
     type: 'bar',
     data: {
-      labels: [{{ fechas|safe }}],
+      labels: [{{ cultivoPerdida|safe }}],
       datasets: [{
-        label: '# of Votes',
-        data: [{{ cantidadesMaiz|safe }}],
+        label: 'Perdidas en Dolares',
+        data: [{{ PerdidaDin|safe }}],
+        borderWidth: 1
+      }]
+    }
+  })
+
+  new Chart(ctx4, {
+    type: 'line',
+    data: {
+      labels: [{{ fechaTem21|safe }}],
+      datasets: [{
+        label: '2021',
+        data: [{{ grados21|safe }}],
         borderWidth: 1
       },{
-        type: 'line',
-        label: 'Line Dataset',
-        data: [50, 50, 50, 50],
+        label: 'Normal',
+        data: [{{ gradosNorm|safe }}],
     }]
     },
     options: {
       scales: {
         y: {
-          beginAtZero: true
+        }
+      }
+    }
+  })
+
+
+  new Chart(ctx5, {
+    type: 'bar',
+    data: {
+      labels: [{{ fechaPre|safe }}],
+      datasets: [{
+        label: '2021',
+        data: [{{ prec|safe }}],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
         }
       }
     }

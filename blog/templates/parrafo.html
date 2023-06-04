@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for par in parrafo %}
+<div class="row">
+    <h1 class="display-1 text-center">{{par.nombre}}</h1>
+    <div class="mx-auto col-md-8">
+        <p class="lead lh-base">{{par.parrafo|safe}}</p>
+    </div>
+    <div class="mx-auto text-center"> 
+        <a href="{% url 'editar_parrafo' par.idParrafo %}" class="btn btn-primary mx-auto">Modificar</a>
+        <form method="POST" action="{% url 'borrar_parrafo' par.idParrafo %}" class="d-flex mx-auto py-3">
+          {% csrf_token %}
+            <button class="btn btn-danger  mx-auto"> Eliminar</button>
+        </form>
+      </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}
+

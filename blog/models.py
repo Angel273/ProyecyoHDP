@@ -3,8 +3,11 @@ from django.db.models.fields import *
 from django.db.models.fields.files import *
 
 class parrafo(models.Model):
+    nombre = CharField(max_length=15, null=False, default='parrafo')
     idParrafo = AutoField(primary_key=True)
     parrafo = TextField()
+    def __str__(self):
+        return self.nombre
 
 class temperaturas(models.Model):
     idTemperatura = AutoField(primary_key=True)
@@ -14,7 +17,9 @@ class temperaturas(models.Model):
 class imagen(models.Model):
     idImage = AutoField(primary_key=True)
     imagen = ImageField(upload_to="blog/images/")
-
+    def __str__(self):
+        return self.imagen.name
+    
 class precipitacion(models.Model):
     idPrecipitacion = AutoField(primary_key=True)
     cantidad = FloatField()
@@ -23,6 +28,8 @@ class precipitacion(models.Model):
 class cultivo(models.Model):
     idCultivo = AutoField(primary_key=True)
     nombre = CharField(max_length=25)
+    def __str__(self):
+        return self.nombre
 
 class perdida(models.Model):
     idPerdida = AutoField(primary_key=True)
@@ -46,3 +53,6 @@ class seccion(models.Model):
     imagen = models.ForeignKey(imagen, null=True,blank=True, on_delete=models.SET_NULL)
     precipitacion = models.ForeignKey(precipitacion, null=True,blank=True, on_delete=models.SET_NULL)
     cultivo = models.ForeignKey(cultivo, null=True,blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.titulo

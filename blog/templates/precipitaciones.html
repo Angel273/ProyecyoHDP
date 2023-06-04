@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center display-1 mx-5 py-5">Administracion precipitaciones</h1>
+<table class="table mx-5 py-5 my-5">
+    <thead>
+        <tr>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for pre in precipitacion %}
+    <tr>
+        <td>{{pre.cantidad}}</td>
+        <td>{{pre.fecha}}</td>
+        <td class="d-flex">
+            <form action="{% url 'editar_precipitacion' pre.idPrecipitacion %}" class="px-1">
+                <button class="btn btn-success">Modificar</button>
+            </form>
+            <form action="{% url 'borrar_precipitacion' pre.idPrecipitacion %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger">Eliminar</button>
+            </form>
+            
+        </td>
+    </tr>    
+    {% endfor %}
+    </tbody>
+</table>
+<div class="col-md-4 mx-auto text-center ">
+    <a href="/crear/precipitacion/" class="btn btn-primary text-center">Agregar</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center display-1 mx-5 py-5">Administracion Producciones</h1>
+<table class="table mx-5 py-5 my-5">
+    <thead>
+        <tr>
+            <th>Cultivo</th>
+            <th>Produccion En quintales</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for pro in produccion %}
+    <tr>
+        <td>{{pro.cultivo.nombre}}</td>
+        <td>{{pro.cantidadProduccion}}</td>
+        <td>{{pro.fechaProduccion.year}}</td>
+        <td class="d-flex">
+            <form action="{% url 'editar_produccion' pro.idProduccion %}" class="px-1">
+                <button class="btn btn-success">Modificar</button>
+            </form>
+            <form action="{% url 'borrar_produccion' pro.idProduccion %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger">Eliminar</button>
+            </form>
+            
+        </td>
+    </tr>    
+    {% endfor %}
+    </tbody>
+</table>
+<div class="col-md-4 mx-auto text-center ">
+    <a href="/crear/produccion/" class="btn btn-primary text-center">Agregar</a>
+</div>
+
+{% endblock %}

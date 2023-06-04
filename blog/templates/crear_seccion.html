@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1 class="text-center display-1 py-5">Crear Seccion</h1>
+<h3 class="text-center text-danger">{{error}}</h3>
+<div class="col-md-4 mx-auto text-center">
+    <form action="/crear/seccion/" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button>Guardar</button>
+    </form> 
+</div>
+
+
+<div class="row mb-1 mx-auto text-center px-5 mx-1 my-5">
+    <div class="col-1 card card-body px-5 mx-1 text-center"> 
+        <a href="/crear/parrafo/" class="text-center btn btn-success mx-auto">crear Parrafo</a>
+        <a href="/ver/parrafos/" class="text-center btn btn-danger mx-auto my-2">administrar parrafos</a>
+    </div>
+    <div class="col-1 card card-body px-5 mx-1 text-center">
+        <a href="/crear/imagen/" class="text-center btn btn-success mx-auto">cargar imagen</a>
+        <a href="/ver/imagen/" class="text-center btn btn-danger mx-auto my-2">administrar imagenes</a>
+    </div>
+  </div>
+{% endblock %}

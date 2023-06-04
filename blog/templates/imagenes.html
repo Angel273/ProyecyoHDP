@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row mb-1">
+    {% for img in imagen %}
+    <div class="row col-md-4 my-5 mx-auto">
+        <p class="text-center">{{img.imagen.name}}</p>
+        <img class="img-fluid rounded " src="{{img.imagen.url}}" alt="">
+        <div class="mx-auto col-md-8 my-2">
+        </div>
+        <div class="mx-auto text-center"> 
+            <a href="{% url 'editar_imagen' img.idImage %}" class="btn btn-primary mx-auto">Modificar</a>
+            <form method="POST" action="{% url 'borrar_imagen' img.idImage %}"  class="d-flex mx-auto py-3">
+              {% csrf_token %}
+                <button class="btn btn-danger  mx-auto"> Eliminar</button>
+            </form>
+          </div>
+    </div>
+    
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}
