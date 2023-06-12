@@ -8,7 +8,7 @@ class DateInput(forms.DateInput):
 class TaskForm(ModelForm):
     class Meta:
         model = seccion
-        fields = ['titulo', 'index', 'parrafo', 'imagen']
+        fields = ['parrafo', 'imagen']
 
 class CultivoForm(ModelForm):
     class Meta:
