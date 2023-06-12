@@ -46,7 +46,7 @@ class produccion(models.Model):
 
 class seccion(models.Model):
     idSeccion = AutoField(primary_key=True)
-    titulo = CharField(null=True, max_length=25)
+    titulo = CharField(null=True, max_length=1000)
     index = IntegerField(null=False, blank=False)
     parrafo = models.ForeignKey(parrafo, null=True, blank=True, on_delete=models.SET_NULL)
     temperaturas = models.ForeignKey(temperaturas, null=True,blank=True,on_delete=models.SET_NULL)
